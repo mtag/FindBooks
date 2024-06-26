@@ -1,0 +1,43 @@
+{
+	"finders": [
+		{
+			"id": "y",
+			"type": "locate",
+			"file": "y:/.db/y.db"
+		},
+		{
+			"id": "x",
+			"type": "locate",
+			"file": "x:/.db/x.db"
+		},
+		{
+			"id": "z",
+			"type": "locate",
+			"file": "z:/.db/z.db"
+		},
+		{
+			"id": "downloaded",
+			"type": "folder",
+			"folder": "z:/download"
+		},
+		{
+			"id" : "calibre",
+			"type" : "calibre",
+			"metadata" : "x:/CalibreLibrary/metadata.db"
+		}
+	],
+	"replaces" : [
+		{
+			"from": "/data16",
+			"to": "y:/"
+		},
+		{
+			"from": "/raid6",
+			"to": "x:/"
+		},
+		{
+			"from": "/raid5",
+			"to": "z:/"
+		}
+	]
+}

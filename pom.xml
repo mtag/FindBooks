@@ -1,0 +1,197 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.m-tag</groupId>
+	<artifactId>FindBooks</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+
+
+	<parent>
+		<groupId>io.openliberty.tools</groupId>
+		<artifactId>liberty-maven-app-parent</artifactId>
+		<version>3.7.1</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<packaging.type>minify,runnable</packaging.type>
+		<eclispe-workspace>c:/Users/mtag/eclipse-workspace/</eclispe-workspace>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>usr-package</id>
+			<properties>
+				<packaging.type>usr</packaging.type>
+				<liberty.jvm.maxHeap>-Xmx1024m</liberty.jvm.maxHeap>
+				<liberty.jvm.stdout>-Dstdout.encoding=UTF-8</liberty.jvm.stdout>
+				<liberty.jvm.stderr>-Dstderr.encoding=UTF-8</liberty.jvm.stderr>
+			</properties>
+		</profile>
+		<profile>
+			<id>package</id>
+			<properties>
+				<liberty.jvm.maxHeap>-Xmx2048m</liberty.jvm.maxHeap>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+		https://mvnrepository.com/artifact/com.ibm.websphere.appserver.api/com.ibm.websphere.appserver.api.json -->
+		<dependency>
+			<groupId>com.ibm.websphere.appserver.api</groupId>
+			<artifactId>com.ibm.websphere.appserver.api.json</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>m-tag.org</groupId>
+			<artifactId>jFindBooks</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<!-- <scope>system</scope>
+			<systemPath>${eclispe-workspace}/jFindBooks/target/jFindBooks.jar</systemPath>-->
+		</dependency>
+		<dependency>
+			<groupId>m-tag.org</groupId>
+			<artifactId>jFindUtils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<!--	<scope>system</scope>
+			<systemPath>${eclispe-workspace}/jFindUtils/target/jFindUtils.jar</systemPath>-->
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.13</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-reload4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>2.0.13</version>
+			<scope>runtime</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+					<execution>
+						<id>install-jFindBoos</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>../jFindBooks/target/jFindBooks.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>m-tag.org</groupId>
+							<artifactId>jFindBooks</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>install-jFIndUtils</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>
+								../jFindUtils/target/jFindUtils.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>m-tag.org</groupId>
+							<artifactId>jFindUtils</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<packagingExcludes>pom.xml</packagingExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.19.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>fully.qualified.MainClass</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance
+						merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
