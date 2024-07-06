@@ -29,19 +29,19 @@ function toTable(results, jsonArray){
 function submitFunction(inputId, resultsId) {
 	const value = document.getElementById(inputId).value;
 	const results = document.getElementById(resultsId);
-	const uri = "find/books?keyword=" + encodeURIComponent(value);
+	const encoded = encodeURIComponent(value);
+	const uri = "find/books?keyword=" + encoded;
 	async function fetchJson() {
-		console.log(`sending:${uri}, value:${value}`);
+		console.log(`find:start:${uri}, value:${value}`);
 		const res = await fetch(uri);
 		if (!res.ok) {
 			console.console.log(`received:${uri}, ${res.ok}`);
-			throw new Error(`error status:${res.status}, res.statusText = ${res.statusText}`);
+			throw new Error(`find:error:status:${res.status}, res.statusText = ${res.statusText}`);
 		}
-		console.log(`ok status:${res.status}`);
+		console.log(`find:ok:status:${res.status}`);
 		const jsonArray = await res.json();
 	    results.innerHTML="";
 		toTable(results, jsonArray);
 	}
 	fetchJson();
-	return false;
 }
