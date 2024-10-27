@@ -65,9 +65,8 @@ public class Books {
     query.setTitle(title);
     query.setKeyword(keyword);
     query.setExists(false);
-    logger.info("finding: {}", query);
     List<Book> books = finders.find(query).toList();
-    logger.info("found: size:{}", books.size());
+    logger.info("query: {}, found: size:{}", query, books.size());
     return Response.status(Response.Status.OK).entity(books).build();
   }
 }
