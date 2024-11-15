@@ -57,7 +57,8 @@ public class Books {
   @GET
   @Produces("application/json")
   public Response get(@QueryParam("author") final String author,
-      @QueryParam("title") final String title, @QueryParam("keyword") final String keyword)
+      @QueryParam("title") final String title, @QueryParam("keyword") final String keyword,
+      @QueryParam("maxCount") final int maxCount)
       throws IOException, SQLException {
 
     final Query query = new Query();

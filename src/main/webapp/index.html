@@ -7,8 +7,16 @@
 <body>
 	<h2>Find Books</h2>
 
+	<h3>keyword</h3>
+	
 	<input type="text" name="keyword" id="keyword" value=""/>
-	<input type="button" name="send" value="find" onclick="submitFunction('keyword', 'results')"/>
+	
+	<h3>max</h3>
+	
+	<input type="text" name="maxCount" id="maxCount" value="100"/>
+	
+	<h3>results</h3>
+	<input type="button" name="send" value="find" onclick="submitFunction('keyword', 'maxCount', 'results')"/>
 
 	<div id="results">
 	</div>
