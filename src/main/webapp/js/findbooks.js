@@ -26,11 +26,12 @@ function toTable(results, jsonArray){
  * @param {string} inputId id of input element
  * @param {string} resultsId id of result to write table
  */
-function submitFunction(inputId, resultsId) {
+function submitFunction(inputId, maxId, resultsId) {
 	const value = document.getElementById(inputId).value;
+	const max = document.getElementById(maxId).value;
 	const results = document.getElementById(resultsId);
 	const encoded = encodeURIComponent(value);
-	const uri = "find/books?keyword=" + encoded;
+	const uri = `find/books?maxCount=${max}&keyword=${encoded}`;
 	async function fetchJson() {
 		console.log(`find:start:${uri}, value:${value}`);
 		const res = await fetch(uri);
@@ -38,7 +39,7 @@ function submitFunction(inputId, resultsId) {
 			console.console.log(`received:${uri}, ${res.ok}`);
 			throw new Error(`find:error:status:${res.status}, res.statusText = ${res.statusText}`);
 		}
-		console.log(`find:ok:status:${res.status}`);
+		console.log("find:ok:status:${res.status}");
 		const jsonArray = await res.json();
 	    results.innerHTML="";
 		toTable(results, jsonArray);
