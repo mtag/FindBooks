@@ -47,6 +47,7 @@ public class Books {
   /**
    * find books with finders.
    *
+   * @param genre genre of book(set null if not specified).
    * @param author author of book(set null if not specified).
    * @param title title of book(set null if not specified).
    * @param keyword keyword(any of fields) of book(set null if not specified).
@@ -56,17 +57,21 @@ public class Books {
    */
   @GET
   @Produces("application/json")
-  public Response get(@QueryParam("author") final String author,
+  public Response get(
+      @QueryParam("genre") final String genre,
+      @QueryParam("author") final String author,
       @QueryParam("title") final String title, @QueryParam("keyword") final String keyword,
       @QueryParam("maxCount") final int maxCount)
       throws IOException, SQLException {
 
     final Query query = new Query();
     query.setAuthor(author);
+    query.setGenre(genre);
     query.setTitle(title);
     query.setKeyword(keyword);
     query.setExists(false);
-    List<Book> books = finders.find(query).toList();
+    // TODO remove toList() if maxCount is not specified.
+    List<Book> books = finders.find(query).sorted().toList();
     logger.info("query: {}, found: size:{}", query, books.size());
     return Response.status(Response.Status.OK).entity(books).build();
   }

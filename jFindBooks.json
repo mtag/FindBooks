@@ -21,6 +21,16 @@
 			"folder": "z:/download"
 		},
 		{
+			"id": "videoWork",
+			"type": "folder",
+			"folder": "x:/video/work"
+		},
+		{
+			"id": "y-recent",
+			"type": "text",
+			"file": "y:/.db/y.db.log"
+		},
+		{
 			"id" : "calibre",
 			"type" : "calibre",
 			"metadata" : "x:/CalibreLibrary/metadata.db"
@@ -28,16 +38,26 @@
 	],
 	"replaces" : [
 		{
-			"from": "/data16",
+			"from": "/home/mtag/y",
 			"to": "y:/"
 		},
 		{
-			"from": "/raid6",
+			"from": "/home/mtag/x",
 			"to": "x:/"
 		},
 		{
-			"from": "/raid5",
+			"from": "/home/mtag/z",
 			"to": "z:/"
+		}
+	],
+	"exports" : [
+		{
+			"path": "/data16/comics",
+			"share" : "comics"
+		},
+		{
+			"path": "/data16/novels",
+			"share" : "novels"
 		}
 	]
 }
