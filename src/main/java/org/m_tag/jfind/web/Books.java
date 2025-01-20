@@ -3,6 +3,8 @@ package org.m_tag.jfind.web;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Stream;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -60,8 +62,9 @@ public class Books {
   public Response get(
       @QueryParam("genre") final String genre,
       @QueryParam("author") final String author,
-      @QueryParam("title") final String title, @QueryParam("keyword") final String keyword,
-      @QueryParam("maxCount") final int maxCount)
+      @QueryParam("title") final String title, 
+      @QueryParam("keyword") final String keyword,
+      @DefaultValue("100") @QueryParam("maxCount") final int maxCount)
       throws IOException, SQLException {
 
     final Query query = new Query();
@@ -70,9 +73,16 @@ public class Books {
     query.setTitle(title);
     query.setKeyword(keyword);
     query.setExists(false);
-    // TODO remove toList() if maxCount is not specified.
-    List<Book> books = finders.find(query).sorted().toList();
-    logger.info("query: {}, found: size:{}", query, books.size());
-    return Response.status(Response.Status.OK).entity(books).build();
+    query.setMaxCount(maxCount);
+    Stream<Book> books = finders.find(query).sorted();
+    Object values;
+    if (maxCount <= 0) {
+      values = books;
+    } else {
+      final List<Book> list = books.toList();
+      logger.info("query: {}, found: size:{}", query, list.size());
+      values = list;
+    }
+    return Response.status(Response.Status.OK).entity(values).build();
   }
 }
