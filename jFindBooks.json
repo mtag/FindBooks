@@ -3,17 +3,23 @@
 		{
 			"id": "y",
 			"type": "locate",
-			"file": "y:/.db/y.db"
+			"file": "w:/.db/y.db"
 		},
 		{
 			"id": "x",
 			"type": "locate",
-			"file": "x:/.db/x.db"
+			"file": "w:/.db/x.db"
 		},
 		{
 			"id": "z",
 			"type": "locate",
-			"file": "z:/.db/z.db"
+			"file": "w:/.db/z.db"
+		},
+		{
+			"id": "e",
+			"type": "locate",
+			"file": "w:/.db/e.db",
+			"checkExistance": false
 		},
 		{
 			"id": "downloaded",
@@ -28,7 +34,7 @@
 		{
 			"id": "y-recent",
 			"type": "text",
-			"file": "y:/.db/y.db.log"
+			"file": "w:/.db/y.db.log"
 		},
 		{
 			"id" : "calibre",
@@ -38,16 +44,20 @@
 	],
 	"replaces" : [
 		{
-			"from": "/home/mtag/y",
+			"from": "\\home\\mtag\\y",
 			"to": "y:/"
 		},
 		{
-			"from": "/home/mtag/x",
+			"from": "\\home\\mtag\\x",
 			"to": "x:/"
 		},
 		{
-			"from": "/home/mtag/z",
+			"from": "\\home\\mtag\\z",
 			"to": "z:/"
+		},
+		{
+			"from": "\\home\\mtag\\e",
+			"to": "e:/"
 		}
 	],
 	"exports" : [
