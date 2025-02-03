@@ -80,7 +80,7 @@ public class Books {
       values = books;
     } else {
       final List<Book> list = books.toList();
-      logger.info("query: {}, found: size:{}", query, list.size());
+      logger.info("query: {}, found: size:{}, maxCount:{}", query, list.size(), maxCount);
       values = list;
     }
     return Response.status(Response.Status.OK).entity(values).build();
